@@ -75,12 +75,12 @@ legend('Case 2 with Wind');
 subplot(3, 1, 2);
 plot(t(1:i-1), acceleration, 'r');
 xlabel('Time (s)');
-ylabel('Horizontal Acceleration (m/s^2)');
+ylabel('Ax (m/s^2)');
 title('Changes in Horizontal Acceleration');
 
 % Plot Changes in Horizontal Velocity
 subplot(3, 1, 3);
 plot(t(1:i-1), velocity_x, 'g');
 xlabel('Time (s)');
-ylabel('Horizontal Velocity (m/s)');
+ylabel('Vx (m/s)');
 title('Changes in Horizontal Velocity');
