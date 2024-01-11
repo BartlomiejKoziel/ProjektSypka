@@ -9,7 +9,7 @@ C = 0.25;    % Drag Coefficient of a Sphere
 
 % Initial Conditions
 delta_t = 0.001; % s
-h = 0.0001;         % m (initial height)
+h = 0.0001;         % m (initial height) czemu tutaj nie może być 0???
 
 % Case 1: Free-Falling Bullet
 x(1) = 0;       % m
