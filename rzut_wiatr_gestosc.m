@@ -30,6 +30,7 @@ wind_angle = 0;    % degree
 % Start Loop For Projectile Motion with Air Resistance and Wind
 while (y(i) > 0)
     % Calculate gęstość powietrza using the formula mentioned earlier
+    % TRZEBA PRZELICZYC WARTOSCI BO COS CHUJOWE SA
     rho = 1.225 * (1 - 0.0065 * h / 288.15)^(5.2561);
 
     % Drag calculation
