@@ -1,0 +1,85 @@
+% Clear workspace and command window
+clear
+clc
+
+% Constants for Bullet
+m = 5;       % kg (mass)
+r = 0.2;     % m (radius)
+C = 0.25;    % Drag Coefficient of a Sphere
+
+% Initial Conditions
+delta_t = 0.001; % s
+h = 0.0001;         % m (initial height)
+
+% Case 1: Free-Falling Bullet
+x(1) = 0;       % m
+y(1) = h;       % m (starting from the initial height)
+v = 500;        % m/s (velocity)
+
+% Case 2: Projectile Bullet With Drag and Wind
+theta2 = 45;    % degree
+vx(1) = v * cosd(theta2);
+vy(1) = v * sind(theta2);
+t(1) = 0;
+i = 1;          % Sets Counter/Index
+
+% Wind parameters
+wind_speed = 0;    % m/s
+wind_angle = 0;    % degree
+
+% Start Loop For Projectile Motion with Air Resistance and Wind
+while (y(i) > 0)
+    % Calculate gęstość powietrza using the formula mentioned earlier
+    rho = 1.225 * (1 - 0.0065 * h / 288.15)^(5.2561);
+
+    % Drag calculation
+    A = (pi * (r * 2)^2) / 4;
+    b = (rho * C * A) / (2 * m);
+    ax = -(b / m) * v * vx;
+
+    % Wind effect
+    ax_wind = -(wind_speed * cosd(wind_angle));
+    ax = ax + ax_wind;
+
+    % Vertical motion
+    ay = -9.81 - (b / m) * v * vy;
+    v = sqrt(vx^2 + vy^2);
+    vx = vx + ax * delta_t;
+    vy = vy + ay * delta_t;
+
+    % Update position and time
+    x(i + 1) = x(i) + vx * delta_t + 0.5 * ax * delta_t^2;
+    y(i + 1) = max(0, y(i) + vy * delta_t + 0.5 * ay * delta_t^2); % Ensure y doesn't go below 0
+    t(i + 1) = t(i) + delta_t;
+
+    % Store acceleration and velocity data for plotting
+    acceleration(i) = ax;
+    velocity_x(i) = vx;
+
+    % Update height for the next iteration
+    h = h - vy * delta_t;
+
+    i = i + 1;
+end
+
+% Plot Projectile Motion with Drag and Wind
+subplot(3, 1, 1);
+plot(x, y, 'b');
+xlabel('Horizontal Distance (m)');
+ylabel('Vertical Distance (m)');
+title('Projectile Path with Wind');
+legend('Case 2 with Wind');
+
+% Plot Changes in Horizontal Acceleration
+subplot(3, 1, 2);
+plot(t(1:i-1), acceleration, 'r');
+xlabel('Time (s)');
+ylabel('Horizontal Acceleration (m/s^2)');
+title('Changes in Horizontal Acceleration');
+
+% Plot Changes in Horizontal Velocity
+subplot(3, 1, 3);
+plot(t(1:i-1), velocity_x, 'g');
+xlabel('Time (s)');
+ylabel('Horizontal Velocity (m/s)');
+title('Changes in Horizontal Velocity');
